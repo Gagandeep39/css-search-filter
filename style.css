@@ -75,6 +75,10 @@ body {
   height: 50px;
 }
 
+.user-list .user-info {
+  margin-left: 12px;
+}
+
 .user-list .user-info h4 {
   margin: 0 0 10px;
 }
