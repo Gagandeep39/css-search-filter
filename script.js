@@ -11,17 +11,18 @@ async function getUsers() {
   return results;
 }
 
-//Add user to list
+//Add user to initialize List
 async function addAllUserToUI() {
-  const users = await getUsers();
-  updateUI(users);
+  listItems = await getUsers();
+  updateUI(listItems);
 }
 
-// filter User based on filter
+// filter User from already fetched userlist
 async function filterUser(searchKey) {
-  const users = await getUsers();
-  listItems = users.filter((user) => user.name.first.includes(searchKey));
-  updateUI(listItems);
+  let filterItems = listItems.filter((user) =>
+    user.name.first.includes(searchKey)
+  );
+  updateUI(filterItems);
 }
 
 function updateUI(users) {
