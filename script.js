@@ -1,6 +1,8 @@
 const result = document.getElementById('result');
 const filter = document.getElementById('filter');
-const listItems = [];
+let listItems = [];
+
+filter.addEventListener('input', (e) => filterUser(e.target.value));
 
 // Fetch user through random user api
 async function getUsers() {
@@ -10,25 +12,35 @@ async function getUsers() {
 }
 
 //Add user to list
-async function addUserToUI() {
+async function addAllUserToUI() {
   const users = await getUsers();
-  listItems.push(...users);
-  result.innerHTML = listItems
+  updateUI(users);
+}
+
+// filter User based on filter
+async function filterUser(searchKey) {
+  const users = await getUsers();
+  listItems = users.filter((user) => user.name.first.includes(searchKey));
+  updateUI(listItems);
+}
+
+function updateUI(users) {
+  result.innerHTML = users
     .map((user) => {
       return `
-      <li>
-          <img
-            src="${user.picture.thumbnail}"
-            alt="Person"
-          />
-          <div class="user-info">
-            <h4>${user.name.first} ${user.name.last}</h4>
-            <p>${user.location.city}, ${user.location.country}</p>
-          </div>
-        </li>
-      `;
+  <li>
+      <img
+        src="${user.picture.thumbnail}"
+        alt="Person"
+      />
+      <div class="user-info">
+        <h4>${user.name.first} ${user.name.last}</h4>
+        <p>${user.location.city}, ${user.location.country}</p>
+      </div>
+    </li>
+  `;
     })
     .join('\n');
 }
 
-addUserToUI();
+addAllUserToUI();
